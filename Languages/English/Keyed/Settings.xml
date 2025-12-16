@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <!-- Settings UI -->
+  <RimTalkEP_SettingsTitle>RimTalk Expanded Preview - Settings</RimTalkEP_SettingsTitle>
+  
+  <RimTalkEP_UseNewTagMatching>Use New Tag Matching</RimTalkEP_UseNewTagMatching>
+  <RimTalkEP_UseNewTagMatchingDesc>When enabled, knowledge will only be matched by tags, not by content keywords. This is a simple and direct matching method that gives users full control.</RimTalkEP_UseNewTagMatchingDesc>
+  
+  <RimTalkEP_EnableKnowledgeChaining>Enable Knowledge Chaining</RimTalkEP_EnableKnowledgeChaining>
+  <RimTalkEP_EnableKnowledgeChainingDesc>When enabled, matched knowledge can trigger additional knowledge matches.</RimTalkEP_EnableKnowledgeChainingDesc>
+  
+  <RimTalkEP_MaxChainingRounds>Max Chaining Rounds: {0}</RimTalkEP_MaxChainingRounds>
+  
+  <RimTalkEP_ResetToDefaults>Reset to Defaults</RimTalkEP_ResetToDefaults>
+  
+  <!-- UI Button Tooltips -->
+  <RimTalkEP_CanBeExtractedEnabled>Can be extracted for knowledge chaining (Click to disable)</RimTalkEP_CanBeExtractedEnabled>
+  <RimTalkEP_CanBeExtractedDisabled>Cannot be extracted for knowledge chaining (Click to enable)</RimTalkEP_CanBeExtractedDisabled>
+  
+  <RimTalkEP_CanBeMatchedEnabled>Can be matched by keywords (Click to disable)</RimTalkEP_CanBeMatchedEnabled>
+  <RimTalkEP_CanBeMatchedDisabled>Cannot be matched by keywords (Click to enable)</RimTalkEP_CanBeMatchedDisabled>
+  
+  <!-- Detail Panel -->
+  <RimTalkEP_ExtendedProperties>Extended Properties</RimTalkEP_ExtendedProperties>
+  <RimTalkEP_CanBeExtracted>Can be extracted:</RimTalkEP_CanBeExtracted>
+  <RimTalkEP_CanBeMatched>Can be matched:</RimTalkEP_CanBeMatched>
+  <RimTalkEP_Yes>Yes (✓)</RimTalkEP_Yes>
+  <RimTalkEP_No>No (×)</RimTalkEP_No>
+  
+  <!-- Edit Panel -->
+  <RimTalkEP_CanBeExtractedCheckbox>Can be extracted (for knowledge chaining)</RimTalkEP_CanBeExtractedCheckbox>
+  <RimTalkEP_CanBeMatchedCheckbox>Can be matched by keywords</RimTalkEP_CanBeMatchedCheckbox>
+  
+  <!-- Multi-Selection Panel Batch Operations -->
+  <RimTalkEP_EnableAllExtract>Enable All Extract</RimTalkEP_EnableAllExtract>
+  <RimTalkEP_DisableAllExtract>Disable All Extract</RimTalkEP_DisableAllExtract>
+  <RimTalkEP_EnableAllMatch>Enable All Match</RimTalkEP_EnableAllMatch>
+  <RimTalkEP_DisableAllMatch>Disable All Match</RimTalkEP_DisableAllMatch>
+</LanguageData>

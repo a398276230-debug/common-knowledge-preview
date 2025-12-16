@@ -1,6 +1,238 @@
-# common-knowledge-preview
-Enhances RimTalk Expand Memory's injection preview dialog with detailed keyword extraction and common knowledge scoring analysis.The code is derived from SANGUO and  AI generate. If it infringes on any rights or makes SANGUO uncomfortable, please contact me and I will delete it immediately.
-Update: 
-Added a feature to filter punctuation marks in the context, preventing keywords from being contaminated by punctuation.
-Added a feature to clear the common knowledge cache after saving edited common knowledge tags, preventing edits from becoming invalid.
-Added a "Forced Keywords" function. In the mod settings, you can now add specific keywords. If a keyword you've added is detected in the context but is not in the final output, it will be automatically added to the list, ensuring it gets triggered.
+# RimTalk Expanded Preview - 常识库增强预览版
+
+这是一个针对 RimTalk-ExpandMemory 前置mod的增强mod，提供了更智能的常识匹配系统和常识链功能。
+
+## 功能特性
+
+### 1. 新的标签匹配逻辑（类似世界书）
+**核心理念**：简单直接，用户完全可控
+
+- **不进行复杂处理**：
+  - ❌ 不对上下文进行n元语法分词
+  - ❌ 不进行TF-IDF权重计算
+  - ❌ 不分析内容相关性
+  
+- **简单直接的匹配**：
+  - ✅ 直接用原始上下文文本
+  - ✅ 加上Pawn信息（名字、性别、种族、特质、技能）
+  - ✅ 检查这个合并文本是否**包含**常识的标签
+  - ✅ 如果包含，触发该常识
+
+- **优势**：
+  - 更快的匹配速度（无需复杂计算）
+  - 更精确的结果（标签精确匹配）
+  - 用户完全控制（通过设置标签）
+
+**示例**：
+```
+用户输入："告诉我关于龙王种的信息"
+当前Pawn：索拉克（龙王种，男性，射击12级）
+
+匹配文本 = "告诉我关于龙王种的信息 索拉克 男性 龙王种 射击"
+
+常识库：
+[龙王种] 龙王种是强大的外星种族  ← 匹配！（包含"龙王种"）
+[索拉克] 索拉克擅长近战            ← 匹配！（包含"索拉克"）
+[人类] 人类是基准种族              ← 不匹配
+
+结果：触发前两条常识
+```
+
+### 2. 常识触发常识（常识链）
+- 当一个常识被匹配后，可以从其**内容**中继续匹配下一轮
+- 支持多轮匹配（可在设置中调整1-5轮）
+- 每个常识可以单独设置是否允许被提取内容
+
+**示例**：
+```
+第1轮匹配：
+输入："龙王种"
+匹配到：[龙王种] 龙王种包括索拉克和梅菲斯特
+
+第2轮匹配（如果启用常识链）：
+从第1轮常识内容提取："龙王种包括索拉克和梅菲斯特"
+匹配到：[索拉克] 索拉克的详细介绍
+匹配到：[梅菲斯特] 梅菲斯特的详细介绍
+
+最终返回：3条常识
+```
+
+### 3. UI增强
+在常识管理界面中，每条常识旁边添加了两个按钮：
+
+- **第一个按钮（✓/×）**：允许被提取内容
+  - ✓ = 绿色：该常识的内容可以被提取用于常识链
+  - × = 红色：该常识的内容不会被提取
+
+- **第二个按钮（✓/×）**：允许被匹配
+  - ✓ = 绿色：该常识可以被关键词匹配
+  - × = 红色：该常识不会被匹配（即使标签匹配也不会触发）
+
+### 4. 详细面板增强
+在查看常识详情时，会显示扩展属性：
+- Can be extracted: 是否允许被提取
+- Can be matched: 是否允许被匹配
+
+### 5. 编辑面板增强
+在编辑常识时，可以设置扩展属性：
+- 复选框：Can be extracted (for knowledge chaining)
+- 复选框：Can be matched by keywords
+
+## Mod设置
+
+在游戏的Mod设置中可以调整以下选项：
+
+1. **Use New Tag Matching (World Book Style)**
+   - 启用新的标签匹配逻辑
+   - 禁用后将使用前置mod的原始匹配方式
+
+2. **Enable Knowledge Chaining**
+   - 启用常识触发常识功能
+   - 禁用后只进行一轮匹配
+
+3. **Max Chaining Rounds**
+   - 常识链的最大轮数（1-5）
+   - 默认值：2轮
+
+4. **Min Match Score**
+   - 最小匹配分数阈值（0.05-0.5）
+   - 默认值：0.1
+   - 注意：新匹配逻辑不使用此设置
+
+## 使用示例
+
+### 示例1：基础标签匹配
+```
+常识1：[龙王种] 龙王种是一种强大的外星种族
+常识2：[索拉克] 索拉克是龙王种的一个分支
+
+用户输入："告诉我关于龙王种的信息"
+匹配文本："告诉我关于龙王种的信息"
+
+匹配结果：常识1（文本包含"龙王种"）
+```
+
+### 示例2：Pawn信息自动匹配
+```
+常识1：[索拉克] 索拉克擅长近战
+常识2：[射击] 射击技能的介绍
+
+当前Pawn：索拉克（射击12级）
+用户输入："我的技能怎么样"
+匹配文本："我的技能怎么样 索拉克 男性 龙王种 射击"
+
+匹配结果：常识1 + 常识2（文本包含"索拉克"和"射击"）
+```
+
+### 示例3：常识链
+```
+常识1：[龙王种] 龙王种包括索拉克和梅菲斯特两个分支
+常识2：[索拉克] 索拉克擅长近战
+常识3：[梅菲斯特] 梅菲斯特擅长魔法
+
+设置：
+- 常识1：允许被提取 ✓
+- 常识2：允许被匹配 ✓
+- 常识3：允许被匹配 ✓
+
+用户输入："告诉我关于龙王种的信息"
+
+第1轮：匹配到常识1（包含"龙王种"）
+第2轮：从常识1内容"龙王种包括索拉克和梅菲斯特两个分支"中
+       匹配到常识2（包含"索拉克"）和常识3（包含"梅菲斯特"）
+
+最终结果：常识1 + 常识2 + 常识3
+```
+
+### 示例4：控制常识触发
+```
+常识1：[规则] 回复控制在80字以内
+常识2：[世界观] 这是一个末日世界
+
+设置：
+- 常识1：不允许被提取 × （避免"规则"、"回复"等词触发其他常识）
+- 常识2：允许被提取 ✓
+
+这样可以防止规则类常识的内容污染常识链。
+```
+
+## 技术细节
+
+### 匹配逻辑流程
+```
+1. 构建匹配文本
+   输入：用户上下文 + Pawn信息
+   输出：完整的匹配文本（不做任何分词处理）
+
+2. 第1轮匹配
+   遍历所有常识：
+   - 检查常识是否启用
+   - 检查是否允许被匹配（扩展属性）
+   - 检查Pawn限制
+   - 检查匹配文本是否包含常识的任一标签
+   
+3. 第2轮匹配（如果启用常识链）
+   从第1轮匹配的常识中：
+   - 提取允许被提取的常识内容
+   - 用这些内容作为新的匹配文本
+   - 重复第1轮的匹配过程
+   
+4. 返回结果
+   - 按重要性排序
+   - 限制数量
+   - 格式化输出
+```
+
+### Pawn信息提取
+自动提取以下信息并添加到匹配文本：
+- 名字
+- 性别
+- 种族
+- 特质（最多5个）
+- 高等级技能（10级以上）
+
+### Harmony补丁
+1. **KnowledgeMatchingPatch**：拦截`CommonKnowledgeLibrary.InjectKnowledgeWithDetails`的所有重载版本
+2. **DialogCommonKnowledgePatch**：在UI中添加扩展属性按钮
+3. **SaveLoadPatch**：确保扩展属性能够保存和加载
+
+### 扩展属性存储
+- 使用字典存储扩展属性，避免修改原始类
+- 在游戏保存时自动序列化
+- 在删除常识时自动清理
+
+## 兼容性
+
+- **前置mod**：RimTalk-ExpandMemory（必需）
+- **RimWorld版本**：1.5+
+- **Harmony版本**：2.x
+
+## 安装
+
+1. 确保已安装 RimTalk-ExpandMemory
+2. 将本mod放在 RimTalk-ExpandMemory 之后加载
+3. 启动游戏并在Mod设置中配置
+
+## 开发者信息
+
+- **命名空间**：`RimTalk.ExpandedPreview`
+- **程序集名称**：`RimTalk_ExpandedPreview.dll`
+- **Harmony ID**：`rimtalk.expandedpreview`
+
+## 更新日志
+
+### v1.0.0 (2025-12-16)
+- 初始版本
+- 实现新的标签匹配逻辑（简单直接，不分词）
+- 实现常识链功能
+- UI增强：添加扩展属性按钮
+- 添加Mod设置界面
+- 支持Pawn信息自动提取和匹配
+
+## 许可证
+
+本项目遵循与 RimTalk-ExpandMemory 相同的许可证。
+
+## 反馈与支持
+
+如有问题或建议，请在GitHub仓库提交Issue。

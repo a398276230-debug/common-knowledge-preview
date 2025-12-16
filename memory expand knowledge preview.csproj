@@ -39,7 +39,7 @@
       <HintPath>..\..\..\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="RimTalkMemoryPatch">
-      <HintPath>..\..\..\..\..\workshop\content\294100\3608181242\1.6\Assemblies\RimTalkMemoryPatch.dll</HintPath>
+      <HintPath>D:\steam\steamapps\workshop\content\294100\3608181242\1.6\Assemblies\RimTalkMemoryPatch.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -60,30 +60,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="common knowledge\CustomKeywordData.cs" />
-    <Compile Include="common knowledge\KeywordScoring.cs" />
-    <Compile Include="common knowledge\KnowledgeExtractionData.cs" />
-    <Compile Include="patch\Dialog_CommonKnowledge_Patch.cs" />
-    <Compile Include="ui\Dialog_SaveGameKeywords.cs" />
-    <Compile Include="ui\KeywordEditorUI.cs" />
-    <Compile Include="CustomKeywordUI.cs" />
-    <Compile Include="common knowledge\MECP_KeywordsManager.cs" />
-    <Compile Include="patch\ChineseKeywordPatch.cs" />
-    <Compile Include="patch\ExtractKeywordsPatch.cs" />
-    <Compile Include="patch\ImprovedChineseWordExtractionPatch.cs" />
-    <Compile Include="patch\PawnKeywordExtractionPatch.cs" />
-    <Compile Include="patch\MainTabpatch.cs" />
-    <Compile Include="patch\injectionpreviewPatches.cs" />
-    <Compile Include="patch\RimTalkTagFixer.cs" />
-    <Compile Include="patch\targetPawnPatch.cs" />
-    <Compile Include="patch\CommonKnowledgeLibrary_InjectKnowledgeWithDetails_Patch.cs" />
-    <Compile Include="patch\SharedPatchData.cs" />
-    <Compile Include="ExpandedPreviewSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="common knowledge\SaveGameKeywordComponent.cs" />
-    <Compile Include="ui\Dialog_ImportKeywords.cs" />
-    <Compile Include="ui\Dialog_SettingsUI.cs" />
-    <Compile Include="ui\Dialog_StopWords.cs" />
+    <Compile Include="RimTalkExpandedPreview.cs" />
+    <Compile Include="common knowledge\ExtendedKnowledgeEntry.cs" />
+    <Compile Include="patch\KnowledgeMatchingPatch.cs" />
+    <Compile Include="patch\DialogCommonKnowledgePatch.cs" />
+    <Compile Include="patch\SaveLoadPatch.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
